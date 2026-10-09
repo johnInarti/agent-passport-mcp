@@ -1,0 +1,64 @@
+{
+  "name": "@fractalai/agent-passport-mcp",
+  "version": "0.2.5",
+  "description": "Model Context Protocol (MCP) server to ISSUE and independently VERIFY verifiable agent passports: ML-DSA-65 (NIST FIPS 204) signature verification + FRC-55 on-chain agent lookup on the FractalAI L1. Works with LangChain, CrewAI, AutoGen, OpenAI Agents \u2014 any MCP client.",
+  "type": "module",
+  "bin": {
+    "agent-passport-mcp": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "mcpName": "io.github.johnInarti/agent-passport",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node test/handshake.mjs",
+    "test:commerce": "npm run build && node --test test/commerce-onboarding.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "agent",
+    "passport",
+    "identity",
+    "verifiable-credential",
+    "post-quantum",
+    "ml-dsa",
+    "dilithium",
+    "fips-204",
+    "attestation",
+    "langchain",
+    "crewai",
+    "autogen"
+  ],
+  "author": "FractalAI Network <helloinvestor@fractalai.net.co>",
+  "license": "MIT",
+  "homepage": "https://fractalai.net.co",
+  "bugs": {
+    "url": "https://github.com/johnInarti/agent-passport-mcp/issues",
+    "email": "helloinvestor@fractalai.net.co"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@noble/post-quantum": "^0.6.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnInarti/agent-passport-mcp.git"
+  }
+}

@@ -1,0 +1,27 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      FRACTALAI_BASE_URL:
+        type: string
+        title: FractalAI web base URL
+        description: Base URL for attestation / receipt-key / x402 endpoints.
+        default: https://fractalai.net.co
+      FRACTALAI_RPC_URL:
+        type: string
+        title: FractalAI L1 JSON-RPC URL
+        description: Public JSON-RPC node used for FRC-55 agent registry reads.
+        default: https://api.fractalai.net.co
+    required: []
+  commandFunction: |-
+    (config) => ({
+      command: 'node',
+      args: ['dist/index.js'],
+      env: {
+        FRACTALAI_BASE_URL: config.FRACTALAI_BASE_URL || 'https://fractalai.net.co',
+        FRACTALAI_RPC_URL: config.FRACTALAI_RPC_URL || 'https://api.fractalai.net.co'
+      }
+    })
+build:
+  dockerfile: Dockerfile
