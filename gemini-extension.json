@@ -1,0 +1,32 @@
+{
+  "name": "agent-passport-mcp",
+  "version": "0.2.5",
+  "description": "Issue and independently verify AI-agent passports and signed AI-decision receipts using ML-DSA-65 (NIST FIPS 204). Verification works offline and needs no trust in the issuer.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "agent-passport": {
+      "command": "npx",
+      "args": ["-y", "@fractalai/agent-passport-mcp@0.2.5"]
+    }
+  },
+  "settings": [
+    {
+      "name": "FractalAI web base URL",
+      "description": "Override the FractalAI web endpoint base. Defaults to https://fractalai.net.co.",
+      "envVar": "FRACTALAI_BASE_URL",
+      "sensitive": false
+    },
+    {
+      "name": "FractalAI RPC URL",
+      "description": "Override the FractalAI JSON-RPC node URL. Defaults to https://api.fractalai.net.co.",
+      "envVar": "FRACTALAI_RPC_URL",
+      "sensitive": false
+    },
+    {
+      "name": "Pinned receipt-signing public key",
+      "description": "Pin a specific base64 ML-DSA-65 receipt-signing public key instead of resolving it from the published key directory.",
+      "envVar": "FRACTALAI_PINNED_RECEIPT_KEY",
+      "sensitive": false
+    }
+  ]
+}
