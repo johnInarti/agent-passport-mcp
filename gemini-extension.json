@@ -1,12 +1,12 @@
 {
   "name": "agent-passport-mcp",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Issue and independently verify AI-agent passports and signed AI-decision receipts using ML-DSA-65 (NIST FIPS 204). Verification works offline and needs no trust in the issuer.",
   "contextFileName": "GEMINI.md",
   "mcpServers": {
     "agent-passport": {
       "command": "npx",
-      "args": ["-y", "@fractalai/agent-passport-mcp@0.2.5"]
+      "args": ["-y", "@fractalai/agent-passport-mcp@0.2.6"]
     }
   },
   "settings": [
