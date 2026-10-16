@@ -47,8 +47,9 @@ import {
   permalinkFromReceipt,
 } from "./passport.js";
 import { registerX402Tools, buildProofCatalog } from "./x402-tools.js";
+import { registerRegistryTools } from "./registry-tools.js";
 
-const server = new McpServer({ name: "agent-passport", version: "0.2.5" });
+const server = new McpServer({ name: "agent-passport", version: "0.2.6" });
 
 function ok(data: unknown) {
   return { content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] };
@@ -510,12 +511,17 @@ server.registerTool(
 //    verify_proof). Standard _meta["x402/payment"] convention → any x402-wallet agent auto-pays. ──
 const x402ToolNames = registerX402Tools(server);
 
+// ── Fractal Agent Commons (B.2): list_agents / get_agent_manifest / verify_agent_manifest — the signed
+//    agents index (/.well-known/agents.json) verified OFFLINE against the pinned notary key, and
+//    per-agent ML-DSA-65 manifests verified only against the agent's CURRENT key (never the embedded one alone). ──
+const registryToolNames = registerRegistryTools(server);
+
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
   process.stderr.write(
-    `agent-passport-mcp v0.2.5 connected (stdio). node=${rpcUrl()} web=${baseUrl()} | ` +
-      `free: verify_passport, lookup_agent | x402-paid: issue_passport, ${x402ToolNames.join(", ")}\n`,
+    `agent-passport-mcp v0.2.6 connected (stdio). node=${rpcUrl()} web=${baseUrl()} | ` +
+      `free: verify_passport, lookup_agent, ${registryToolNames.join(", ")} | x402-paid: issue_passport, ${x402ToolNames.join(", ")}\n`,
   );
 
   // ── Opt-out auto-demo: prove this isn't vaporware with ONE real, free call against the live

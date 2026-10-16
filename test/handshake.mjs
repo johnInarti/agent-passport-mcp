@@ -28,6 +28,8 @@ const EXPECTED_TOOLS = [
   // v0.2.0 x402 ⇄ MCP bridge: the 7 paid routes as auto-payable tools
   "seal_ml_dsa", "notarize_decision", "prove_provenance", "attest_training",
   "seal_cbom", "verify_agent_kya", "verify_proof", "witness_payment",
+  // Fractal Agent Commons (B.2): signed agents index + per-agent manifests, verified offline
+  "list_agents", "get_agent_manifest", "verify_agent_manifest",
 ];
 const LOGOS = "0x9980b79c9383f6be0ba3a7eae2fdd5b082b1c0d50c224039b9b908dbce8db415";
 
@@ -69,7 +71,7 @@ try {
   const { tools } = await client.listTools();
   const names = tools.map((t) => t.name).sort();
   pass(
-    `tools/list returns the ${EXPECTED_TOOLS.length} expected tools (4 base + 8 x402 bridge)`,
+    `tools/list returns the ${EXPECTED_TOOLS.length} expected tools (4 base + 8 x402 bridge + 3 agent commons)`,
     EXPECTED_TOOLS.every((t) => names.includes(t)) && names.length === EXPECTED_TOOLS.length,
     names.join(", "),
   );

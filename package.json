@@ -1,6 +1,6 @@
 {
   "name": "@fractalai/agent-passport-mcp",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Model Context Protocol (MCP) server to ISSUE and independently VERIFY verifiable agent passports: ML-DSA-65 (NIST FIPS 204) signature verification + FRC-55 on-chain agent lookup on the FractalAI L1. Works with LangChain, CrewAI, AutoGen, OpenAI Agents \u2014 any MCP client.",
   "type": "module",
   "bin": {
@@ -20,6 +20,7 @@
     "typecheck": "tsc --noEmit",
     "test": "node test/handshake.mjs",
     "test:commerce": "npm run build && node --test test/commerce-onboarding.mjs",
+    "test:registry": "npm run build && node --test test/registry-tools.mjs",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

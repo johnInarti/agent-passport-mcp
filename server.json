@@ -1,14 +1,22 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.johnInarti/agent-passport",
-  "description": "Post-quantum (ML-DSA-65/FIPS-204) agent identity + AI-decision receipts, verifiable offline.",
-  "version": "0.2.5",
+  "description": "ML-DSA-65 (FIPS 204) agent identity, AI-decision receipts and signed agent registry; offline verify",
+  "version": "0.2.6",
   "websiteUrl": "https://fractalai.net.co",
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "agents_registry": "https://fractalai.net.co/.well-known/agents.json",
+      "agents_registry_api": "https://fractalai.net.co/api/agents/registry",
+      "manifest_schema": "fractalai-agent-manifest/1",
+      "jwks": "https://fractalai.net.co/.well-known/jwks.json"
+    }
+  },
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@fractalai/agent-passport-mcp",
-      "version": "0.2.5",
+      "version": "0.2.6",
       "transport": {
         "type": "stdio"
       }
