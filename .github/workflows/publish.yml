@@ -1,0 +1,46 @@
+name: Publish to npm (trusted publishing)
+
+# Publishes @fractalai/agent-passport-mcp when a tag vX.Y.Z is pushed.
+# Authentication is npm Trusted Publishing (GitHub OIDC): no NPM_TOKEN secret, no OTP.
+# Requires a one-time setup on npmjs.com: package Settings -> Trusted Publisher ->
+# GitHub Actions, user "johnInarti", repository "agent-passport-mcp", workflow "publish.yml".
+# Trusted publishing needs npm >= 11.5.1, Node >= 22.14 and a GitHub-hosted runner.
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  id-token: write   # OIDC token exchanged with npm for a short-lived publish credential
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Ensure npm supports trusted publishing (>= 11.5.1)
+        run: npm install -g npm@^11.5.1 && npm --version
+
+      - name: Tag must match package.json and server.json
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG=$(node -p "require('./package.json').version")
+          SRV=$(node -p "require('./server.json').version")
+          SRV_PKG=$(node -p "require('./server.json').packages[0].version")
+          echo "tag=$TAG package.json=$PKG server.json=$SRV/$SRV_PKG"
+          [ "$TAG" = "$PKG" ] && [ "$TAG" = "$SRV" ] && [ "$TAG" = "$SRV_PKG" ]
+
+      - run: npm ci
+      - run: npm run build
+      - name: Offline tests (registry tools + commerce onboarding)
+        run: node --test test/registry-tools.mjs test/registry-attacks.mjs test/registry-attacks-r2.mjs test/registry-attacks-r4.mjs test/registry-attacks-r5.mjs test/registry-regions.mjs test/commerce-onboarding.mjs
+
+      - name: Publish
+        run: npm publish --provenance --access public

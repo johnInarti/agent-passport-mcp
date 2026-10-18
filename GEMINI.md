@@ -12,6 +12,9 @@ FractalAI at all. Receipts can additionally be anchored write-once on-chain.
 - `verify_passport` — verify an agent passport's ML-DSA-65 signature.
 - `lookup_agent` — look up an agent in the on-chain FRC-55 registry.
 - `list_fractalai_proofs` — list the available proof endpoints and their prices.
+- `list_agents` — fetch the ML-DSA-65-signed index of registered agents and verify its signature offline against the notary key pinned in the package.
+- `get_agent_manifest` — fetch an agent's signed manifest and verify it only against the agent's current key.
+- `verify_agent_manifest` — verify a manifest JSON you were handed, offline.
 
 ## Paid tools (x402 micropayments, USDC on Base)
 
