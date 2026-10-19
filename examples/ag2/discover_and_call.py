@@ -18,6 +18,7 @@ audit. Single validator, no paying customers yet. Pre-pilot.
 
 import asyncio
 import os
+import tempfile
 
 from ag2 import Agent
 from ag2.events import ToolCallEvent
@@ -41,7 +42,12 @@ async def main() -> None:
     toolkit = MCPToolkit(
         MCPStdioServerConfig(
             command="npx",
-            args=["-y", "@fractalai/agent-passport-mcp@0.2.5"],
+            args=["-y", "@fractalai/agent-passport-mcp@0.2.6"],
+            # Launch npx OUTSIDE this repo. Inside a clone, the root package.json IS
+            # @fractalai/agent-passport-mcp, so when the requested version matches it npx
+            # resolves the local (unbuilt) project instead of the registry and fails with
+            # "agent-passport-mcp: command not found" -> MCPError: Connection closed.
+            cwd=tempfile.gettempdir(),
             env=env,
             server_label="fractalai",
         ),

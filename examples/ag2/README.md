@@ -16,6 +16,14 @@ python3.12 -m venv .venv
 
 ## Verified run
 
+Re-verified on 2026-10-19 against `@fractalai/agent-passport-mcp@0.2.6` (15 tools) with `ag2` 1.1.2,
+`mcp` 2.3.0 and Python 3.12: `final: ok`, `lookup_agent` returns the live FRC-55 registry. The script
+launches `npx` from the system temp dir (`cwd=tempfile.gettempdir()`): inside a clone of this repo,
+the root `package.json` is the package itself, so `npx` would otherwise resolve the local, unbuilt
+project when the version matches and fail with `command not found` / `MCPError: Connection closed`.
+
+### First run on 2026-10-09
+
 Verified on 2026-10-09 with `ag2` 1.1.2, `mcp` 2.3.0, Python 3.12,
 `@fractalai/agent-passport-mcp` 0.2.5:
 
